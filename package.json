@@ -1,0 +1,25 @@
+{
+  "name": "nftpicgen",
+  "version": "1.0.0",
+  "description": "title",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elhadjx/nftpicgen.git"
+  },
+  "keywords": [
+    "nft",
+    "art",
+    "blockchain",
+    "design"
+  ],
+  "author": "elhadjx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elhadjx/nftpicgen/issues"
+  },
+  "homepage": "https://github.com/elhadjx/nftpicgen#readme"
+}
