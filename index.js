@@ -9,8 +9,8 @@ function generateNFTQuantity(q) {
 
 function generateNFT(nftIndex) {
     // Create a canvas with a specified width and height
-    const width = 500;
-    const height = 500;
+    const width = 1024;
+    const height = 1024;
     const c = canvas.createCanvas(width, height);
     const ctx = c.getContext('2d');
 
@@ -80,4 +80,4 @@ function randomColor() {
 };
 
 
-generateNFTQuantity(10)
+generateNFTQuantity(100)
