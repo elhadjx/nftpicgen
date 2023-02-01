@@ -7,9 +7,10 @@ This is a simple Node.js script for generating random NFT art images. The genera
 To use this script, you'll need to have [Node.js](https://nodejs.org) and [npm](https://www.npmjs.com) installed on your machine.
 
 Clone the repository and install the required dependencies by running the following commands:
+
 ```
 $ git clone https://github.com/elhadjx/nftpicgen.git
-$ cd nft-art-generator
+$ cd nftpicgen
 $ npm install
 ```
 
@@ -26,6 +27,17 @@ The generated images will be saved to `out/nft${index}.png`.
 ## Contributing
 
 If you'd like to contribute to this project, please fork the repository and make your changes. Pull requests are welcome!
+
+### Client
+
+The client is the platform, built in [ReactJS](https://reactjs.org/).
+
+```
+$ git clone https://github.com/elhadjx/nftpicgen.git
+$ cd nftpicgen/client
+$ npm install
+$ npm run dev
+```
 
 ## License
 
