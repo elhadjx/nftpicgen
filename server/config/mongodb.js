@@ -1,1 +1,1 @@
-// TODO: init mongo db and setup a connection
+const mongoose = require('mongoose')
