@@ -1,5 +1,6 @@
 const express = require('express')
 const fileUpload = require('express-fileupload')
+const prettyBytes = require('pretty-bytes');
 
 const PORT = process.env.PORT || 3500
 
@@ -19,7 +20,16 @@ app.post('/upload', function (req, res) {
         console.log('No files Uploaded!')
         return res.status(400).send('No files were uploaded.');
     }
+    let toReturn = "\n"
+    if (Object.keys(req.files["sampleFile"]).length > 1) {
+        req.files["sampleFile"].forEach(file => {
+            toReturn += `Name: ${file.name}, Size: ${prettyBytes(file.size)} \n`
+        });
+    }
+    console.log(toReturn)
+    res.send(toReturn);
 
+    /*
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     sampleFile = req.files.sampleFile;
     uploadPath = __dirname + '/out' + sampleFile.name;
@@ -32,6 +42,7 @@ app.post('/upload', function (req, res) {
         res.send('File uploaded!');
 
     });
+    */
 });
 
 app.listen(PORT, () =>
