@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'upload.html'))
 })
 app.post('/upload', function (req, res) {
-    let files;
+    let files = []
     let uploadPath;
 
     if (!req.files || Object.keys(req.files).length === 0) {
@@ -26,15 +26,11 @@ app.post('/upload', function (req, res) {
     }
 
     let toReturn = "\n"
-    let acceptedFiles;
     const layers = Object.keys(req.files);
-
     if (layers.length > 1) {
-        let layersAndFiles = [];
+
         layers.forEach(layerName => {
 
-            layersAndFiles.push(layerName)
-            layersAndFiles[layerName] = [];
             const layer = req.files[layerName];
 
             if (Object.keys(layer).length < 1)
@@ -44,11 +40,11 @@ app.post('/upload', function (req, res) {
 
                 if (!valideFile(file))
                     return;
-
-                layersAndFiles[layerName].push(file)
+                //file.layerName = layerName;
+                files.push(file)
 
                 toReturn += `<pre></br>` +
-                    `Layer: \t\t${layerName}` +
+                    //`Layer: \t\t${file.layerName}</br>` +
                     `Name: \t\t${file.name}</br>` +
                     `Size: \t\t${prettyBytes(file.size)} </br>` +
                     `Encoding: \t${file.encoding} </br>` +
@@ -62,10 +58,20 @@ app.post('/upload', function (req, res) {
 
         });
     }
+    let fileCount = 0;
+    files.forEach(file => {
+        //console.log(file)
+        //uploadPath = `${__dirname}/out/${file.layerName}/${fileCount++}.png`;
+        fileCount++;
+        uploadPath = `${__dirname}/out/${fileCount}.png`;
+        file.mv(uploadPath, function (err) {
+            if (err)
+                return res.status(500).send(err);
+            console.log(`File Uploaded: ${fileCount}`)
+        });
+    });
 
-
-    console.log(Object.keys(req.files))
-    res.status(200).send(Object.keys(req.files["files_layer_background"]));
+    res.status(200).send(toReturn);
 
     /*
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
