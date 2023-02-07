@@ -13,7 +13,7 @@ app.use(fileUpload({
 
 
 app.post('/upload', function (req, res) {
-    let sampleFile;
+    let files;
     let uploadPath;
 
     if (!req.files || Object.keys(req.files).length === 0) {
@@ -21,12 +21,25 @@ app.post('/upload', function (req, res) {
         return res.status(400).send('No files were uploaded.');
     }
     let toReturn = "\n"
-    if (Object.keys(req.files["sampleFile"]).length > 1) {
-        req.files["sampleFile"].forEach(file => {
-            toReturn += `Name: ${file.name}, Size: ${prettyBytes(file.size)} \n`
+    let acceptedFiles = [];
+    if (Object.keys(req.files["files"]).length > 1) {
+        req.files["files"].forEach(file => {
+            if (file) {
+
+            }
+            toReturn += `<pre></br>` +
+                `Name: \t\t${file.name}</br>` +
+                `Size: \t\t${prettyBytes(file.size)} </br>` +
+                `Encoding: \t${file.encoding} </br>` +
+                `tempFilePath: \t${file.tempFilePath} </br>` +
+                `truncated: \t${file.truncated} </br>` +
+                `mimetype: \t${file.mimetype} </br>` +
+                `md5: \t\t${file.md5} </br>` +
+                '\t\t</pre></br>'
         });
     }
     console.log(toReturn)
+    console.log(Object.keys(req.files["files"]["0"]))
     res.send(toReturn);
 
     /*
