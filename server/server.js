@@ -1,4 +1,5 @@
 const express = require('express')
+const fs = require('fs')
 const fileUpload = require('express-fileupload')
 const prettyBytes = require('pretty-bytes');
 const path = require('path')
@@ -40,11 +41,12 @@ app.post('/upload', function (req, res) {
 
                 if (!valideFile(file))
                     return;
-                //file.layerName = layerName;
+                file.layerName = layerName;
                 files.push(file)
 
                 toReturn += `<pre></br>` +
-                    //`Layer: \t\t${file.layerName}</br>` +
+                    //
+                    `Layer: \t\t${file.layerName}</br>` +
                     `Name: \t\t${file.name}</br>` +
                     `Size: \t\t${prettyBytes(file.size)} </br>` +
                     `Encoding: \t${file.encoding} </br>` +
@@ -63,11 +65,13 @@ app.post('/upload', function (req, res) {
         //console.log(file)
         //uploadPath = `${__dirname}/out/${file.layerName}/${fileCount++}.png`;
         fileCount++;
-        uploadPath = `${__dirname}/out/${fileCount}.png`;
+        if (!fs.existsSync('./out/' + file.layerName)) {
+            fs.mkdirSync('./out/' + file.layerName);
+        }
+        uploadPath = `${__dirname}/out/${file.layerName}/${fileCount}.png`;
         file.mv(uploadPath, function (err) {
             if (err)
                 return res.status(500).send(err);
-            console.log(`File Uploaded: ${fileCount}`)
         });
     });
 
