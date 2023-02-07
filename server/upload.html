@@ -8,9 +8,30 @@
 <body>
     <form ref='uploadForm' id='uploadForm' action='http://localhost:3500/upload' method='post'
         encType="multipart/form-data">
-        <input type="file" name="files" accept="image/png" multiple />
-        <input type='submit' value='Upload!' />
+        <div id="backgroundLayer">
+            <h4>Background: </h4>
+            <input type="file" name="files" accept="image/png" multiple />
+        </div>
+        <input type='submit' id="submitButton" value='Upload' />
     </form>
+    </br>
+    <button onclick="addLayer()">Add Layer</button>
+    <script>
+        function addLayer() {
+            console.log('clicked:')
+            const layers = document.getElementById("uploadForm")
+            layers.removeChild(document.getElementById('submitButton'))
+            let layer_index = layers.childElementCount;
+            layers.innerHTML += `
+                <div id="layer${layer_index}">
+                    <h4>Layer ${layer_index}</h4>
+                    <input type="file" name="files_layer_${layer_index}" accept="image/png" multiple />
+                </div>
+                <input type='submit' id="submitButton" value='Upload' />
+
+            `
+        }
+    </script>
 </body>
 
 </html>

@@ -1,6 +1,7 @@
 const express = require('express')
 const fileUpload = require('express-fileupload')
 const prettyBytes = require('pretty-bytes');
+const path = require('path')
 
 const PORT = process.env.PORT || 3500
 
@@ -11,7 +12,9 @@ app.use(fileUpload({
     limits: { fileSize: 100 * 1024 * 1024 },
 }));
 
-
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'upload.html'))
+})
 app.post('/upload', function (req, res) {
     let files;
     let uploadPath;
@@ -24,9 +27,11 @@ app.post('/upload', function (req, res) {
     let acceptedFiles = [];
     if (Object.keys(req.files["files"]).length > 1) {
         req.files["files"].forEach(file => {
-            if (file) {
-
+            if (file.size > (15 * 1024 * 1024)) {
+                //skip file if it's larger than 15: Compressed PNG losless 24bit/pixel:	    14.53MB
+                return;
             }
+            acceptedFiles.push(file);
             toReturn += `<pre></br>` +
                 `Name: \t\t${file.name}</br>` +
                 `Size: \t\t${prettyBytes(file.size)} </br>` +
@@ -38,9 +43,10 @@ app.post('/upload', function (req, res) {
                 '\t\t</pre></br>'
         });
     }
-    console.log(toReturn)
-    console.log(Object.keys(req.files["files"]["0"]))
-    res.send(toReturn);
+    acceptedFiles.forEach(file => {
+        file.mv(`./input/${file.name}`)
+    });
+    res.status(200).send(toReturn);
 
     /*
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
