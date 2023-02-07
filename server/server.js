@@ -2,6 +2,7 @@ const express = require('express')
 const fileUpload = require('express-fileupload')
 const prettyBytes = require('pretty-bytes');
 const path = require('path')
+const valideFile = require('./utils/valideFile')
 
 const PORT = process.env.PORT || 3500
 
@@ -23,30 +24,48 @@ app.post('/upload', function (req, res) {
         console.log('No files Uploaded!')
         return res.status(400).send('No files were uploaded.');
     }
+
     let toReturn = "\n"
-    let acceptedFiles = [];
-    if (Object.keys(req.files["files"]).length > 1) {
-        req.files["files"].forEach(file => {
-            if (file.size > (15 * 1024 * 1024)) {
-                //skip file if it's larger than 15: Compressed PNG losless 24bit/pixel:	    14.53MB
+    let acceptedFiles;
+    const layers = Object.keys(req.files);
+
+    if (layers.length > 1) {
+        let layersAndFiles = [];
+        layers.forEach(layerName => {
+
+            layersAndFiles.push(layerName)
+            layersAndFiles[layerName] = [];
+            const layer = req.files[layerName];
+
+            if (Object.keys(layer).length < 1)
                 return;
-            }
-            acceptedFiles.push(file);
-            toReturn += `<pre></br>` +
-                `Name: \t\t${file.name}</br>` +
-                `Size: \t\t${prettyBytes(file.size)} </br>` +
-                `Encoding: \t${file.encoding} </br>` +
-                `tempFilePath: \t${file.tempFilePath} </br>` +
-                `truncated: \t${file.truncated} </br>` +
-                `mimetype: \t${file.mimetype} </br>` +
-                `md5: \t\t${file.md5} </br>` +
-                '\t\t</pre></br>'
+
+            layer.forEach(file => {
+
+                if (!valideFile(file))
+                    return;
+
+                layersAndFiles[layerName].push(file)
+
+                toReturn += `<pre></br>` +
+                    `Layer: \t\t${layerName}` +
+                    `Name: \t\t${file.name}</br>` +
+                    `Size: \t\t${prettyBytes(file.size)} </br>` +
+                    `Encoding: \t${file.encoding} </br>` +
+                    `tempFilePath: \t${file.tempFilePath} </br>` +
+                    `truncated: \t${file.truncated} </br>` +
+                    `mimetype: \t${file.mimetype} </br>` +
+                    `md5: \t\t${file.md5} </br>` +
+                    '\t\t</pre></br>';
+
+            });
+
         });
     }
-    acceptedFiles.forEach(file => {
-        file.mv(`./input/${file.name}`)
-    });
-    res.status(200).send(toReturn);
+
+
+    console.log(Object.keys(req.files))
+    res.status(200).send(Object.keys(req.files["files_layer_background"]));
 
     /*
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
