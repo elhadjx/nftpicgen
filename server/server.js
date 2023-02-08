@@ -3,8 +3,9 @@ const fs = require('fs')
 const fileUpload = require('express-fileupload')
 const prettyBytes = require('pretty-bytes');
 const path = require('path')
-const valideFile = require('./utils/valideFile')
 const { compositeImages } = require('./services/Composite')
+const { getDirectories, getFiles, validFile } = require('./utils/files')
+const CreationCounter = require('./utils/CreationCounter')
 
 
 const PORT = process.env.PORT || 3500
@@ -45,7 +46,7 @@ app.post('/upload', function (req, res) {
 
         layer.forEach(file => {
 
-            if (!valideFile(file))
+            if (!validFile(file))
                 return;
 
             file.layerName = layerName;
@@ -93,17 +94,45 @@ app.post('/upload', function (req, res) {
 
 app.get('/generate', (req, res) => {
     const token = req.headers.token;
-    const nftQuantity = req.headers.nftq;
+    let nftQuantity = req.headers.nftq;
 
     if (!fs.existsSync(`./out/${token}`)) {
         fs.mkdirSync(`./out/${token}`);
     }
+    let nftCount = 0;
+    let possibleNFTs = 1;
 
-    for (let nftCount = 0; nftCount < nftQuantity; nftCount++) {
-        let imgArray = ['input/background.png', 'input/image1.png'];
+    //Count possible NFTs
+    let layersNames = getDirectories(`./input/${token}`)
+    let layers = [];
+    let maxsArray = [];
 
-        compositeImages(imgArray, 'out/testOut')
+    layersNames.forEach(layerName => {
+        let layerFiles = getFiles(`./input/${token}/${layerName}`)
+        layers.push(layerFiles)
+        maxsArray.push(layerFiles.length - 1)
+        possibleNFTs *= layerFiles.length
+    });
+
+    nftQuantity = nftQuantity < possibleNFTs ? nftQuantity : possibleNFTs;
+    let cCounter = new CreationCounter(maxsArray)
+    console.log(cCounter)
+
+    while (nftCount < nftQuantity) {
+        let imageArray = []
+        //console.log(layers)
+        for (let lyi = 0; lyi < layers.length; lyi++) {
+            imageArray.push(`input/${token}/${layersNames[lyi]}/${layers[lyi][cCounter.current[lyi]]}`)
+        }
+        console.log('imageArray')
+        console.log(imageArray)
+        compositeImages(imageArray, `out/${token}/${nftCount}`)
+        cCounter.increment()
+        console.log(cCounter)
+
+        nftCount++
     }
+    res.send('hehe')
 
 
 })
