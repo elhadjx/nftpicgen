@@ -15,7 +15,7 @@ app.use(fileUpload({
 }));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'upload.html'))
+    res.sendFile(path.join(__dirname, 'index.html'))
 })
 app.post('/upload', function (req, res) {
     let files = []
@@ -62,13 +62,13 @@ app.post('/upload', function (req, res) {
     }
     let fileCount = 0;
     files.forEach(file => {
-        //console.log(file)
-        //uploadPath = `${__dirname}/out/${file.layerName}/${fileCount++}.png`;
-        fileCount++;
+
         if (!fs.existsSync('./out/' + file.layerName)) {
             fs.mkdirSync('./out/' + file.layerName);
         }
-        uploadPath = `${__dirname}/out/${file.layerName}/${fileCount}.png`;
+
+        uploadPath = `${__dirname}/out/${file.layerName}/${fileCount++}.png`;
+
         file.mv(uploadPath, function (err) {
             if (err)
                 return res.status(500).send(err);
@@ -77,20 +77,6 @@ app.post('/upload', function (req, res) {
 
     res.status(200).send(toReturn);
 
-    /*
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    sampleFile = req.files.sampleFile;
-    uploadPath = __dirname + '/out' + sampleFile.name;
-
-    // Use the mv() method to place the file somewhere on your server
-    sampleFile.mv(uploadPath, function (err) {
-        if (err)
-            return res.status(500).send(err);
-        console.log(`File Uploaded: ${sampleFile.name}`)
-        res.send('File uploaded!');
-
-    });
-    */
 });
 
 app.listen(PORT, () =>
