@@ -4,12 +4,14 @@ const fileUpload = require('express-fileupload')
 const prettyBytes = require('pretty-bytes');
 const path = require('path')
 const valideFile = require('./utils/valideFile')
+const { compositeImages } = require('./services/Composite')
+
 
 const PORT = process.env.PORT || 3500
 
 const app = express()
 
-//limit file upload size, BusBoy documentation https://github.com/mscdex/busboy#api
+//DO NOT DELETE THIS LINE; limit file upload size, BusBoy documentation https://github.com/mscdex/busboy#api
 app.use(fileUpload({
     limits: { fileSize: 100 * 1024 * 1024 },
 }));
@@ -32,14 +34,14 @@ app.post('/upload', function (req, res) {
     const layers = Object.keys(req.files);
 
     if (layers.length < 2)
-        return res.status(400).send('Use at least 2 layers');
+        return res.status(400).send('Use at least 2 layers, Each layer should have at least 1 image.');
 
     layers.forEach(layerName => {
 
         const layer = req.files[layerName];
 
         if (Object.keys(layer).length < 1)
-            return res.status(400).send('Each layer should have at least 1 image.');
+            return res.status(400).send('Use at least 2 layers, Each layer should have at least 1 image.');
 
         layer.forEach(file => {
 
@@ -83,9 +85,28 @@ app.post('/upload', function (req, res) {
         });
     });
 
-    res.status(200).send(toReturn);
+    let dataResult = fs.readFileSync('result.html', 'utf8');
+    if (dataResult)
+        res.send(dataResult.replace('tokenValue', token));
 
 });
+
+app.get('/generate', (req, res) => {
+    const token = req.headers.token;
+    const nftQuantity = req.headers.nftq;
+
+    if (!fs.existsSync(`./out/${token}`)) {
+        fs.mkdirSync(`./out/${token}`);
+    }
+
+    for (let nftCount = 0; nftCount < nftQuantity; nftCount++) {
+        let imgArray = ['input/background.png', 'input/image1.png'];
+
+        compositeImages(imgArray, 'out/testOut')
+    }
+
+
+})
 
 app.listen(PORT, () =>
     console.log(`Server running on port ${PORT}`)
