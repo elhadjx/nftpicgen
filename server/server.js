@@ -17,9 +17,11 @@ app.use(fileUpload({
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'))
 })
+
 app.post('/upload', function (req, res) {
     let files = []
     let uploadPath;
+    let token = req.body.token;
 
     if (!req.files || Object.keys(req.files).length === 0) {
         console.log('No files Uploaded!')
@@ -28,46 +30,52 @@ app.post('/upload', function (req, res) {
 
     let toReturn = "\n"
     const layers = Object.keys(req.files);
-    if (layers.length > 1) {
 
-        layers.forEach(layerName => {
+    if (layers.length < 2)
+        return res.status(400).send('Use at least 2 layers');
 
-            const layer = req.files[layerName];
+    layers.forEach(layerName => {
 
-            if (Object.keys(layer).length < 1)
+        const layer = req.files[layerName];
+
+        if (Object.keys(layer).length < 1)
+            return res.status(400).send('Each layer should have at least 1 image.');
+
+        layer.forEach(file => {
+
+            if (!valideFile(file))
                 return;
 
-            layer.forEach(file => {
+            file.layerName = layerName;
+            files.push(file)
 
-                if (!valideFile(file))
-                    return;
-                file.layerName = layerName;
-                files.push(file)
-
-                toReturn += `<pre></br>` +
-                    //
-                    `Layer: \t\t${file.layerName}</br>` +
-                    `Name: \t\t${file.name}</br>` +
-                    `Size: \t\t${prettyBytes(file.size)} </br>` +
-                    `Encoding: \t${file.encoding} </br>` +
-                    `tempFilePath: \t${file.tempFilePath} </br>` +
-                    `truncated: \t${file.truncated} </br>` +
-                    `mimetype: \t${file.mimetype} </br>` +
-                    `md5: \t\t${file.md5} </br>` +
-                    '\t\t</pre></br>';
-
-            });
+            toReturn += `<pre></br>` +
+                //
+                `Layer: \t\t${file.layerName}</br>` +
+                `Name: \t\t${file.name}</br>` +
+                `Size: \t\t${prettyBytes(file.size)} </br>` +
+                `Encoding: \t${file.encoding} </br>` +
+                `tempFilePath: \t${file.tempFilePath} </br>` +
+                `truncated: \t${file.truncated} </br>` +
+                `mimetype: \t${file.mimetype} </br>` +
+                `md5: \t\t${file.md5} </br>` +
+                '\t\t</pre></br>';
 
         });
-    }
+
+    });
+
     let fileCount = 0;
     files.forEach(file => {
 
-        if (!fs.existsSync('./out/' + file.layerName)) {
-            fs.mkdirSync('./out/' + file.layerName);
+        if (!fs.existsSync(`./input/${token}`)) {
+            fs.mkdirSync(`./input/${token}`);
+        }
+        if (!fs.existsSync(`./input/${token}/${file.layerName}`)) {
+            fs.mkdirSync(`./input/${token}/${file.layerName}`);
         }
 
-        uploadPath = `${__dirname}/out/${file.layerName}/${fileCount++}.png`;
+        uploadPath = `${__dirname}/input/${token}/${file.layerName}/${fileCount++}.png`;
 
         file.mv(uploadPath, function (err) {
             if (err)

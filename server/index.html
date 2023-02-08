@@ -8,6 +8,7 @@
 <body>
     <form ref='uploadForm' id='uploadForm' action='http://localhost:3500/upload' method='post'
         encType="multipart/form-data">
+        <input type="text" name="token" id="token">
         <div id="backgroundLayer">
             <h4>Background: </h4>
             <input type="file" name="files_layer_background" accept="image/png" multiple />
@@ -17,11 +18,22 @@
     </br>
     <button onclick="addLayer()">Add Layer</button>
     <script>
+        const gg = generateToken();
+        document.getElementById('token').value = gg;
+        console.log(gg)
+        function generateToken() {
+            const Chars = 'AZERTYUIOPQSDFGHJKLMMWXCVBNazertyuiopqsdfghjklmwxcvbn09876543210987654321';
+            let toReturn = '';
+            for (let i = 0; i < 64; i++) {
+                toReturn += Chars.charAt(Math.floor(Math.random() * 73))
+            }
+            return toReturn
+        }
+
         function addLayer() {
-            console.log('clicked:')
             const layers = document.getElementById("uploadForm")
             layers.removeChild(document.getElementById('submitButton'))
-            let layer_index = layers.childElementCount;
+            let layer_index = layers.childElementCount - 1;
             layers.innerHTML += `
                 <div id="layer${layer_index}">
                     <h4>Layer ${layer_index}</h4>
@@ -30,6 +42,8 @@
                 <input type='submit' id="submitButton" value='Upload' />
 
             `
+            document.getElementById('token').value = gg;
+
         }
     </script>
 </body>
