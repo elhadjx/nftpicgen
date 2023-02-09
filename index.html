@@ -2,25 +2,64 @@
 <html>
 
 <head>
+    <style>
+        form {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+        }
 
+        #backgroundLayer {
+            margin-bottom: 20px;
+        }
+
+        .fileLayer {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f2f2f2;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        #submitButton {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+
+        h1 {
+            text-align: center;
+        }
+
+        h4 {
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
-    <form ref='uploadForm' id='uploadForm' action='http://localhost:3500/upload' method='post'
-        encType="multipart/form-data">
+    <form ref='uploadForm' id='uploadForm' action='/upload' method='post' encType="multipart/form-data">
         <input type="hidden" name="token" id="token">
         <div id="backgroundLayer">
             <h4>Background: </h4>
             <input type="file" name="files_layer_0" accept="image/png" multiple />
         </div>
-        <input type='submit' id="submitButton" value='Upload' />
+        <input class="btn" type='submit' id="submitButton" value='Upload' />
+        <button class="btn" id="buttonAdd" onclick="addLayer()">Add Layer</button>
+
     </form>
-    </br>
-    <button onclick="addLayer()">Add Layer</button>
+
     <script>
         const gg = generateToken();
         document.getElementById('token').value = gg;
         console.log(gg)
+
         function generateToken() {
             const Chars = 'AZERTYUIOPQSDFGHJKLMMWXCVBNazertyuiopqsdfghjklmwxcvbn09876543210987654321';
             let toReturn = '';
@@ -33,13 +72,15 @@
         function addLayer() {
             const layers = document.getElementById("uploadForm")
             layers.removeChild(document.getElementById('submitButton'))
+            layers.removeChild(document.getElementById('buttonAdd'))
             let layer_index = layers.childElementCount - 1;
             layers.innerHTML += `
-                <div id="layer${layer_index}">
+                <div class="fileLayer" id="layer${layer_index}">
                     <h4>Layer ${layer_index}</h4>
                     <input type="file" name="files_layer_${layer_index}" accept="image/png" multiple />
                 </div>
-                <input type='submit' id="submitButton" value='Upload' />
+                <input class="btn" type='submit' id="submitButton" value='Upload' />
+                <button class="btn" id="buttonAdd" onclick="addLayer()">Add Layer</button>
 
             `
             document.getElementById('token').value = gg;

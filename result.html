@@ -6,11 +6,24 @@
 </head>
 
 <body>
-    <input type="hidden" id="token" value=tokenValue />
-    <input type="number" id="nftQuantity" />
-    <button onclick="generate()">Generate</button>
-    <div id="images" class="container">
-
+    <div class="genDiv">
+        <input type="hidden" id="token" value=tokenValue />
+        <input type="number" id="nftQuantity" placeholder="Quantity" /></br>
+        <button class="btn" onclick="generate()">Generate</button>
+    </div>
+    <div class="row">
+        <div class="column">
+            <img src="wedding.jpg">
+        </div>
+        <div class="column">
+            <img src="underwater.jpg">
+        </div>
+        <div class="column">
+            <img src="wedding.jpg">
+        </div>
+        <div class="column">
+            <img src="underwater.jpg">
+        </div>
     </div>
     <script>
         function generate() {

@@ -1,76 +1,45 @@
-poster {
-    width: 300px;
-    padding: 7%;
-    position: relative;
-    box-sizing: border-box;
-    background-color: white;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
-    filter: saturate(70%) contrast(85%);
+.btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
 }
 
-.poster img {
-    width: 100%;
-    display: block;
-    z-index: 1;
+input {
+    border-radius: 25px;
+    height: 40px;
+    width: auto;
+    text-align: center;
+    border-color: transparent;
 }
 
-.poster:before,
-.poster:after {
-    content: '';
-    width: 100%;
-    left: 0;
-    position: absolute;
-}
-
-.poster:before {
-    height: 4%;
-    bottom: -4%;
-    background-repeat: no-repeat;
-    background-image: linear-gradient(177deg, rgba(0, 0, 0, 0.22) 10%, transparent 50%),
-        linear-gradient(-177deg, rgba(0, 0, 0, 0.22) 10%, transparent 50%);
-    background-size: 49% 100%;
-    background-position: 2% 0, 98% 0;
-}
-
-.poster:after {
-    height: 100%;
-    top: 0;
-    z-index: 2;
-    background-repeat: no-repeat;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) .5%, rgba(0, 0, 0, 0.15) 1.2%, transparent 1.2%),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.1) .5%, rgba(0, 0, 0, 0.15) 1.2%, transparent 1.2%),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.1) .5%, rgba(0, 0, 0, 0.15) 1.2%, transparent 1.2%),
-        linear-gradient(265deg, rgba(0, 0, 0, 0.2), transparent 10%),
-        linear-gradient(5deg, rgba(0, 0, 0, 0.2), transparent 15%),
-        linear-gradient(-5deg, rgba(0, 0, 0, 0.1), transparent 10%),
-        linear-gradient(5deg, rgba(0, 0, 0, 0.1), transparent 10%),
-        linear-gradient(-265deg, rgba(0, 0, 0, 0.2), transparent 10%),
-        linear-gradient(-5deg, rgba(0, 0, 0, 0.2), transparent 15%),
-        linear-gradient(266deg, rgba(0, 0, 0, 0.2), transparent 10%);
-    background-size: 50% 100%, 100% 33.3333%, 100% 33.3333%, 50% 33.3333%, 50% 33.3333%, 50% 33.3333%, 50% 33.3333%, 50% 33.3333%, 50% 33.3333%, 50% 33.3333%;
-    background-position: right top, left center, left bottom, left top, left top, right top, left center, right center, right center, left bottom;
-}
-
-body {
-    background-color: lightsalmon;
-    padding: 60px 20px;
-}
-
-.container {
-    width: 650px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    justify-items: center;
-    gap: 60px 30px;
+div {
+    height: auto;
+    padding-top: 20px;
+    text-align: center;
     margin: 0 auto;
 }
 
-.container>img {
-    width: 250px;
+body {
+    background-color: aqua;
 }
 
-body {
-    background-color: lightsalmon;
-    padding: 60px 20px;
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+/* Create two equal columns that sits next to each other */
+.column {
+    flex: 50%;
+    padding: 0 4px;
+}
+
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
 }
