@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'nftgen'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_13CCAEC8A8014EEA99007345961C2BB2 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BCCE08E745B54934AA80E730D45ACCDE }}
           package: .
