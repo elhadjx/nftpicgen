@@ -35,6 +35,11 @@ body {
     text-align: center;
 }
 
+img {
+    border-radius: 25px;
+    margin: 10px;
+}
+
 /* Create two equal columns that sits next to each other */
 .column {
     flex: 50%;
