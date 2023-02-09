@@ -1,3 +1,6 @@
-server/input/
-server/out/
-node_modules/
+node_modules
+server/input/*
+out
+.env
+input/*
+out/*

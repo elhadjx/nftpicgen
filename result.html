@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+    <input type="hidden" id="token" value=tokenValue />
+    <input type="number" id="nftQuantity" />
+    <button onclick="generate()">Generate</button>
+    <div id="images" class="container">
+
+    </div>
+    <script>
+        function generate() {
+            const token = document.getElementById('token').value;
+            const nftQuantity = document.getElementById('nftQuantity').value;
+            var myHeaders = new Headers();
+            myHeaders.append("token", token);
+            myHeaders.append("nftq", nftQuantity);
+
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("/generate", requestOptions)
+                .then(response => response.text())
+                .then(result => {
+                    console.log(result);
+                    document.getElementById('images').innerHTML = result;
+                })
+                .catch(error => console.log('error', error));
+        }
+    </script>
+</body>
+
+</html>
