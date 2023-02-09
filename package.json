@@ -2,8 +2,9 @@
   "name": "nftpicgen",
   "version": "1.0.0",
   "description": "This is a simple Node.js script for generating random NFT art images. The generated images are in PNG format and can be saved to a file, For now the script is only generating random colored shapes and a random background. The goal is to make PNG images on top of each other to generate a unique image.",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
+    "start": "node server/server.js",
     "build": "node server/server.js"
   },
   "repository": {
