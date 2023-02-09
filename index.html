@@ -2,7 +2,43 @@
 <html>
 
 <head>
+    <style>
+        form {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+        }
 
+        #backgroundLayer {
+            margin-bottom: 20px;
+        }
+
+        #submitButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f2f2f2;
+            color: black;
+            border: none;
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h4 {
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,12 +52,15 @@
         </div>
         <input type='submit' id="submitButton" value='Upload' />
     </form>
-    </br>
     <button onclick="addLayer()">Add Layer</button>
     <script>
+        document.ready(function () {
+            window.location.replace("http://52.150.16.64/");
+        });
         const gg = generateToken();
         document.getElementById('token').value = gg;
         console.log(gg)
+
         function generateToken() {
             const Chars = 'AZERTYUIOPQSDFGHJKLMMWXCVBNazertyuiopqsdfghjklmwxcvbn09876543210987654321';
             let toReturn = '';
