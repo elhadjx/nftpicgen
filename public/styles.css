@@ -23,6 +23,7 @@ div {
     margin: 0 auto;
 }
 
+
 body {
     background-color: aqua;
 }
@@ -31,6 +32,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     padding: 0 4px;
+    text-align: center;
 }
 
 /* Create two equal columns that sits next to each other */
