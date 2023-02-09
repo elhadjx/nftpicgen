@@ -17,6 +17,10 @@ app.use(fileUpload({
     limits: { fileSize: 100 * 1024 * 1024 },
 }));
 
+app.use('/static', express.static(path.join(__dirname, 'out')))
+app.use('/css', express.static(path.join(__dirname, 'public')))
+
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'))
 })
@@ -116,23 +120,20 @@ app.get('/generate', (req, res) => {
 
     nftQuantity = nftQuantity < possibleNFTs ? nftQuantity : possibleNFTs;
     let cCounter = new CreationCounter(maxsArray)
-    console.log(cCounter)
-
+    let imagesRes = '';
     while (nftCount < nftQuantity) {
         let imageArray = []
-        //console.log(layers)
         for (let lyi = 0; lyi < layers.length; lyi++) {
             imageArray.push(`input/${token}/${layersNames[lyi]}/${layers[lyi][cCounter.current[lyi]]}`)
         }
-        console.log('imageArray')
-        console.log(imageArray)
         compositeImages(imageArray, `out/${token}/${nftCount}`)
         cCounter.increment()
-        console.log(cCounter)
-
+        //console.log(cCounter)
+        imagesRes += `<img src=static/${token}/${nftCount}.png> </br>`
         nftCount++
     }
-    res.send('hehe')
+
+    res.send(imagesRes)
 
 
 })
