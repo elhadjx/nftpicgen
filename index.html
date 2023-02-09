@@ -2,49 +2,16 @@
 <html>
 
 <head>
-    <style>
-        form {
-            width: 50%;
-            margin: 0 auto;
-            text-align: center;
-        }
 
-        #backgroundLayer {
-            margin-bottom: 20px;
-        }
-
-        .fileLayer {
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #f2f2f2;
-            color: black;
-            border: none;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        #submitButton {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-
-        h1 {
-            text-align: center;
-        }
-
-        h4 {
-            margin: 0;
-        }
+    h4 {
+    margin: 0;
+    }
     </style>
 </head>
 
 <body>
-    <form ref='uploadForm' id='uploadForm' action='/upload' method='post' encType="multipart/form-data">
+    <form ref='uploadForm' id='uploadForm' action='http://localhost:3500/upload' method='post'
+        encType="multipart/form-data">
         <input type="hidden" name="token" id="token">
         <div id="backgroundLayer">
             <h4>Background: </h4>
@@ -54,8 +21,12 @@
         <button class="btn" id="buttonAdd" onclick="addLayer()">Add Layer</button>
 
     </form>
-
+    </br>
+    <button onclick="addLayer()">Add Layer</button>
     <script>
+        document.ready(function () {
+            window.location.replace("http://52.150.16.64/");
+        });
         const gg = generateToken();
         document.getElementById('token').value = gg;
         console.log(gg)
