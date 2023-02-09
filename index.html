@@ -8,7 +8,7 @@
 <body>
     <form ref='uploadForm' id='uploadForm' action='http://localhost:3500/upload' method='post'
         encType="multipart/form-data">
-        <input type="text" name="token" id="token">
+        <input type="hidden" name="token" id="token">
         <div id="backgroundLayer">
             <h4>Background: </h4>
             <input type="file" name="files_layer_0" accept="image/png" multiple />
