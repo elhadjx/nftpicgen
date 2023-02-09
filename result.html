@@ -13,16 +13,12 @@
     </div>
     <div class="row">
         <div class="column">
-            <img src="wedding.jpg">
         </div>
         <div class="column">
-            <img src="underwater.jpg">
         </div>
         <div class="column">
-            <img src="wedding.jpg">
         </div>
         <div class="column">
-            <img src="underwater.jpg">
         </div>
     </div>
     <script>
@@ -43,7 +39,7 @@
                 .then(response => response.text())
                 .then(result => {
                     console.log(result);
-                    document.getElementById('images').innerHTML = result;
+                    document.getElementsByClassName('row')[0].innerHTML = result;
                 })
                 .catch(error => console.log('error', error));
         }
