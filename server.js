@@ -12,7 +12,6 @@ const PORT = process.env.PORT || 3500
 
 const app = express()
 
-//DO NOT DELETE THIS LINE; limit file upload size, BusBoy documentation https://github.com/mscdex/busboy#api
 app.use(fileUpload({
     limits: { fileSize: 100 * 1024 * 1024 },
 }));
