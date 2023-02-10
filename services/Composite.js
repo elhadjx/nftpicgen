@@ -7,15 +7,16 @@ function getMetadata(image) {
 }
 
 async function resizeImage(image, height, width) {
-    try {
-        await sharp(image)
-            .resize(height, width)
-            .toFile(image + '2');
-        fs.unlinkSync(image);
-        fs.renameSync(image + '2', image, () => { })
-    } catch (e) {
-        console.log('eeee' + e)
-    }
+    await sharp(image)
+        .resize(height, width, {
+            fit: 'inside',
+            withoutEnlargement: true
+        })
+        .toFile(image + '2');
+    setTimeout(() => {
+        fs.renameSync(image + '2', image);
+    }, 1000);
+
 }
 
 async function compositeImages(ImageArray, output) {
@@ -36,5 +37,7 @@ async function compositeImages(ImageArray, output) {
         console.log(error);
     }
 }
+
+
 
 module.exports = { getMetadata, compositeImages, resizeImage }

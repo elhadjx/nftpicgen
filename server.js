@@ -81,13 +81,13 @@ app.post('/upload', function (req, res) {
         if (!fs.existsSync(`./input/${token}/${file.layerName}`)) {
             fs.mkdirSync(`./input/${token}/${file.layerName}`);
         }
-        imagePath = `input/${token}/${file.layerName}/${fileCount++}.png`
-        uploadPath = `${__dirname}/${imagePath}`;
+        let simagePath = `input/${token}/${file.layerName}/${fileCount++}.png`
+        uploadPath = `${__dirname}/${simagePath}`;
 
         file.mv(uploadPath, function (err) {
             if (err)
                 return res.status(500).send(err);
-            resizeImage(imagePath, 500, 500);
+            resizeImage(simagePath, 250, 250);
         });
 
     });
