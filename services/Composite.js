@@ -1,8 +1,21 @@
 const sharp = require("sharp");
+const fs = require('fs')
 
 function getMetadata(image) {
     const metadata = sharp(image).metadata();
     return metadata;
+}
+
+async function resizeImage(image, height, width) {
+    try {
+        await sharp(image)
+            .resize(height, width)
+            .toFile(image + '2');
+        fs.unlinkSync(image);
+        fs.renameSync(image + '2', image, () => { })
+    } catch (e) {
+        console.log('eeee' + e)
+    }
 }
 
 async function compositeImages(ImageArray, output) {
@@ -24,5 +37,4 @@ async function compositeImages(ImageArray, output) {
     }
 }
 
-
-module.exports = { getMetadata, compositeImages }
+module.exports = { getMetadata, compositeImages, resizeImage }

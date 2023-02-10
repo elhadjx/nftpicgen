@@ -3,7 +3,7 @@ const fs = require('fs')
 const fileUpload = require('express-fileupload')
 const prettyBytes = require('pretty-bytes');
 const path = require('path')
-const { compositeImages } = require('./services/Composite')
+const { compositeImages, resizeImage } = require('./services/Composite')
 const { getDirectories, getFiles, validFile } = require('./utils/files')
 const CreationCounter = require('./utils/CreationCounter')
 
@@ -22,7 +22,7 @@ app.use('/css', express.static(path.join(__dirname, 'public')))
 
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'))
+    res.sendFile(path.join(__dirname, 'upload.html'))
 })
 
 app.post('/upload', function (req, res) {
@@ -81,13 +81,15 @@ app.post('/upload', function (req, res) {
         if (!fs.existsSync(`./input/${token}/${file.layerName}`)) {
             fs.mkdirSync(`./input/${token}/${file.layerName}`);
         }
-
-        uploadPath = `${__dirname}/input/${token}/${file.layerName}/${fileCount++}.png`;
+        imagePath = `input/${token}/${file.layerName}/${fileCount++}.png`
+        uploadPath = `${__dirname}/${imagePath}`;
 
         file.mv(uploadPath, function (err) {
             if (err)
                 return res.status(500).send(err);
+            resizeImage(imagePath, 500, 500);
         });
+
     });
 
     let dataResult = fs.readFileSync('result.html', 'utf8');
