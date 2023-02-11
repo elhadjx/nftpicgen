@@ -1,0 +1,27 @@
+body {
+    background: linear-gradient(#e66465, #9198e5);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    text-align: center;
+}
+
+.text {
+    font-size: 1.5em;
+    color: white;
+    margin-bottom: 1em;
+}
+
+.start-button {
+    background-color: white;
+    color: #1e3c72;
+    border: none;
+    border-radius: 25px;
+    padding: 1em 1.5em;
+    font-size: 1.2em;
+    cursor: pointer;
+}
