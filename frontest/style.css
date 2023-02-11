@@ -1,15 +1,18 @@
 body {
     background: linear-gradient(#e66465, #9198e5);
-    height: 100vh;
+    height: 98.3vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+
 .logo {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 0px;
+    left: 0px;
+    width: 50%;
+    height: auto;
 }
 
 .container {
@@ -26,8 +29,15 @@ body {
     background-color: white;
     color: #1e3c72;
     border: none;
+    width: 250px;
     border-radius: 25px;
+    margin-top: 200px;
     padding: 1em 1.5em;
     font-size: 1.2em;
+    opacity: 0.6;
     cursor: pointer;
+}
+
+.start-button:hover {
+    opacity: 1
 }
