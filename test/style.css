@@ -6,6 +6,12 @@ body {
     align-items: center;
 }
 
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
 .container {
     text-align: center;
 }
