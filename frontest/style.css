@@ -41,3 +41,41 @@ body {
 .start-button:hover {
     opacity: 1
 }
+
+.btn {
+    background-color: white;
+    color: #1e3c72;
+    border: none;
+    width: 250px;
+    border-radius: 25px;
+    margin-top: 150px;
+    padding: 1em 1.5em;
+    font-size: 1.2em;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 1
+}
+
+.fileLayer {
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+input::file-selector-button {
+    background-image: linear-gradient(to right,
+            #ff7a18,
+            #af002d,
+            #319197 100%,
+            #319197 200%);
+    background-position-x: 0%;
+    background-size: 200%;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    padding: 1rem 1.25rem;
+    text-shadow: 0 1px 1px #333;
+    transition: all 0.25s;
+}
