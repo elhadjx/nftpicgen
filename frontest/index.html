@@ -19,7 +19,18 @@
         </div>
         <button class="start-button">Start</button>
     </div>
-
+    <form ref='uploadForm' id='uploadForm' action='/upload' method='post' encType="multipart/form-data">
+        <input type="hidden" name="token" id="token">
+        <div class="fileLayer" id="backgroundLayer">
+            <h4>Background: </h4>
+            <input type="file" name="files_layer_0" accept="image/png" multiple />
+        </div>
+        <input class="btn" type='submit' id="submitButton" value='Upload' />
+        <button class="btn" id="buttonAdd" onclick="addLayer()">Add Layer</button>
+    </form>
+    <script>
+        document.getElementById("uploadForm").style.display = "none";
+    </script>
     <script src="script.js"></script>
 </body>
 
