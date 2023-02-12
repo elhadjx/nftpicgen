@@ -16,62 +16,47 @@ app.use(fileUpload({
     limits: { fileSize: 100 * 1024 * 1024 },
 }));
 
-app.use('/static', express.static(path.join(__dirname, 'out')))
-app.use('/css', express.static(path.join(__dirname, 'public')))
+//app.use('/static', express.static(path.join(__dirname, 'out')))
+app.use('/', express.static(path.join(__dirname, 'public')))
 
-
+/*
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'upload.html'))
 })
-
+*/
 app.post('/upload', function (req, res) {
     let files = []
     let uploadPath;
-    let token = req.body.token;
+    let token = req.headers.token;
 
-    if (!req.files || Object.keys(req.files).length === 0) {
-        console.log('No files Uploaded!')
-        return res.status(400).send('No files were uploaded.');
+    const layers = req.files
+    console.log(Object.keys(layers))
+    console.log(Object.keys(layers[0]))
+    console.log(layers[0][0])
+
+    if (layers.length < 2) {
+        console.log('Use at least 2 layers, Each layer should have at least 1 image.');
+        return res.status(400).send('Use at least 2 layers, Each layer should have at least 1 image.');
     }
 
-    let toReturn = "\n"
-    const layers = Object.keys(req.files);
+    Object.keys(layers).forEach(layer_index => {
 
-    if (layers.length < 2)
-        return res.status(400).send('Use at least 2 layers, Each layer should have at least 1 image.');
-
-    layers.forEach(layerName => {
-
-        const layer = req.files[layerName];
-
-        if (Object.keys(layer).length < 1)
+        if (Object.keys(layer_index).length < 1)
             return res.status(400).send('Use at least 2 layers, Each layer should have at least 1 image.');
 
-        layer.forEach(file => {
-
-            if (!validFile(file))
+        Object.keys(layers[layer_index]).forEach(file => {
+            if (!validFile(file)) {
+                console.log('file invalid')
                 return;
-
-            file.layerName = layerName;
+            }
+            file.layerName = 'layer' + layer_index;
             files.push(file)
+        })
+    })
 
-            toReturn += `<pre></br>` +
-                //
-                `Layer: \t\t${file.layerName}</br>` +
-                `Name: \t\t${file.name}</br>` +
-                `Size: \t\t${prettyBytes(file.size)} </br>` +
-                `Encoding: \t${file.encoding} </br>` +
-                `tempFilePath: \t${file.tempFilePath} </br>` +
-                `truncated: \t${file.truncated} </br>` +
-                `mimetype: \t${file.mimetype} </br>` +
-                `md5: \t\t${file.md5} </br>` +
-                '\t\t</pre></br>';
-
-        });
-
-    });
 
     let fileCount = 0;
+    console.log('files.length: ' + files.length)
     files.forEach(file => {
 
         if (!fs.existsSync(`./input/${token}`)) {
@@ -84,18 +69,30 @@ app.post('/upload', function (req, res) {
         uploadPath = `${__dirname}/${simagePath}`;
 
         file.mv(uploadPath, function (err) {
-            if (err)
+            if (err) {
+                console.log('couldnt move file')
                 return res.status(500).send(err);
+            }
             resizeImage(simagePath, 250, 250);
         });
 
     });
+    return res.json({
+        status: 'success', message: Object.keys(files).toString()
+    })
+})
 
-    let dataResult = fs.readFileSync('result.html', 'utf8');
-    if (dataResult)
-        res.send(dataResult.replace('tokenValue', token));
+/*
+
+
+
+//let dataResult = fs.readFileSync('result.html', 'utf8');
+//if (dataResult)
+res.status(200).json({ token: token });
 
 });
+*/
+
 
 app.get('/generate', (req, res) => {
     const token = req.headers.token;

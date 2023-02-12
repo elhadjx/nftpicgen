@@ -9,14 +9,15 @@
 </head>
 
 <body>
+
     <div class="logo">
         <a href="/">
             <img src="images/logo.png" alt="Logo" height="120px">
         </a>
     </div>
 
-    <div class="container" id="landingDiv">
 
+    <div class="container" id="landingDiv">
         <div class="text">
             Create Unique Digital Assets with Our Innovative Platform!
             </br>Submit your input and see your ideas come to
@@ -24,15 +25,34 @@
         </div>
         <button class="start-button" onclick="showUploadForm()">Start</button>
     </div>
-    <form ref='uploadForm' id='uploadForm'>
+
+    <div ref='uploadForm' id='uploadForm'>
         <input type="hidden" name="token" id="token">
         <div class="fileLayer" id="layer0">
             <h3>Layer 0</h3>
             <input type="file" class="custom-file-input" name="files_layer_0" accept="image/png" multiple />
         </div>
-        <button class="btn" id="submitButton" onclick="uploadFiles()">Upload</button>
+        <button class="btn" id="uploadButton" onclick="uploadFiles()">Upload</button>
         <button class="btn" id="buttonAdd" onclick="addLayer()">Add Layer</button>
-    </form>
+    </div>
+
+
+    <div class="genDiv">
+        <input type="hidden" id="token" value=tokenValue />
+        <input type="number" id="nftQuantity" placeholder="Quantity" /> &nbsp;
+        <button class="btn" onclick="generate()">Generate</button>
+
+        <div class="row">
+            <div class="column">
+            </div>
+            <div class="column">
+            </div>
+            <div class="column">
+            </div>
+            <div class="column">
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 

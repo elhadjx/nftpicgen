@@ -19,12 +19,16 @@ function validFile(file) {
     const SIZE_LIMIT = 10 * 1024 * 1024 // 10MB
 
     //Check size
-    if (file.size > SIZE_LIMIT)
+    if (file.size > SIZE_LIMIT) {
+        console.log('size limit')
         return false;
+    }
 
     //Check extension
-    if (file.mimetype != "image/png")
+    if (file.mimetype != "image/png") {
+        console.log(file)
         return false;
+    }
 
     return true;
 }
