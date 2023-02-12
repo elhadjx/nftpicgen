@@ -16,7 +16,7 @@ app.use(fileUpload({
     limits: { fileSize: 100 * 1024 * 1024 },
 }));
 
-//app.use('/static', express.static(path.join(__dirname, 'out')))
+app.use('/result', express.static(path.join(__dirname, 'out')))
 app.use('/', express.static(path.join(__dirname, 'public')))
 
 /*
@@ -76,17 +76,6 @@ app.post('/upload', function (req, res) {
     })
 })
 
-/*
-
-
-
-//let dataResult = fs.readFileSync('result.html', 'utf8');
-//if (dataResult)
-res.status(200).json({ token: token });
-
-});
-*/
-
 
 app.get('/generate', (req, res) => {
     const token = req.headers.token;
@@ -120,7 +109,7 @@ app.get('/generate', (req, res) => {
         }
         compositeImages(imageArray, `out/${token}/${nftCount}`)
         cCounter.increment()
-        imagesRes += `<img src="static/${token}/${nftCount}.png" width="250" height="250"> </br>`
+        imagesRes += `<img src="result/${token}/${nftCount}.png" width="250" height="250"> </br>`
         nftCount++
     }
 

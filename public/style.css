@@ -89,7 +89,6 @@ input::file-selector-button {
 }
 
 .custom-file-input::-webkit-file-upload-button:hover {
-
     opacity: 1;
 }
 
@@ -101,6 +100,10 @@ input::file-selector-button {
     border-color: transparent;
 }
 
+.genDiv {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
 
 .row {
     display: flex;

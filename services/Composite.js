@@ -13,9 +13,11 @@ async function resizeImage(image, height, width) {
             withoutEnlargement: true
         })
         .toFile(image + '2');
-    setTimeout(() => {
+    try {
         fs.renameSync(image + '2', image);
-    }, 1000);
+    } catch (error) {
+        console.log(error)
+    }
 
 }
 
