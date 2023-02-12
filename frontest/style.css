@@ -1,5 +1,6 @@
 body {
-    background: linear-gradient(#e66465, #9198e5);
+    background: linear-gradient(#10131f, #0e1036);
+    color: white;
     height: 98.3vh;
     display: flex;
     justify-content: center;
@@ -9,14 +10,15 @@ body {
 
 .logo {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 20px;
+    left: 20px;
     width: 50%;
     height: auto;
 }
 
 .container {
     text-align: center;
+
 }
 
 .text {
@@ -42,6 +44,7 @@ body {
     opacity: 1
 }
 
+
 .btn {
     background-color: white;
     color: #1e3c72;
@@ -62,20 +65,53 @@ body {
 .fileLayer {
     margin-bottom: 10px;
     padding: 10px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+h3 {
+    width: 30%;
 }
 
 input::file-selector-button {
-    background-image: linear-gradient(to right,
-            #ff7a18,
-            #af002d,
-            #319197 100%,
-            #319197 200%);
-    background-position-x: 0%;
-    background-size: 200%;
-    border: 0;
-    border-radius: 8px;
-    color: #fff;
-    padding: 1rem 1.25rem;
-    text-shadow: 0 1px 1px #333;
-    transition: all 0.25s;
+    background-color: white;
+    color: #1e3c72;
+    border: none;
+    width: 250px;
+    border-radius: 25px;
+    padding: 1em 1.5em;
+    font-size: 1.2em;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.custom-file-input::before {
+    content: 'Select Layer Files';
+    background-color: white;
+    color: #1e3c72;
+    border: none;
+    width: 250px;
+    border-radius: 25px;
+    margin-top: 200px;
+    padding: 1em 1.5em;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.custom-file-input::after {
+    content: 'Selected';
+
+}
+
+.custom-file-input {
+    opacity: 0.6;
+}
+
+.custom-file-input:hover {
+    opacity: 1
 }

@@ -3,13 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>NFT Pic Generator</title>
+    <title>GeNFT</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
     <div class="logo">
-        <img src="logo.png" alt="Logo" height="100px" width="auto">
+        <a href="/">
+            <img src="images/logo.png" alt="Logo" height="120px">
+        </a>
     </div>
     <div class="container" id="landingDiv">
         <div class="text">
@@ -21,8 +24,9 @@
     </div>
     <form ref='uploadForm' id='uploadForm' action='/upload' method='post' encType="multipart/form-data">
         <input type="hidden" name="token" id="token">
-        <div class="fileLayer" id="backgroundLayer">
-            <input type="file" name="files_layer_0" accept="image/png" multiple />
+        <div class="fileLayer" id="layer0">
+            <h3>Layer 0</h3>
+            <input type="file" class="custom-file-input" name="files_layer_0" accept="image/png" multiple />
         </div>
         <input class="btn" type='submit' id="submitButton" value='Upload' />
         <button class="btn" id="buttonAdd" onclick="addLayer()">Add Layer</button>
