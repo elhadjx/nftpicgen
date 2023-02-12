@@ -30,12 +30,8 @@ app.post('/upload', function (req, res) {
     let token = req.headers.token;
 
     const layers = req.files
-    console.log(Object.keys(layers))
-    console.log(Object.keys(layers[0]))
-    console.log(layers[0][0])
 
     if (layers.length < 2) {
-        console.log('Use at least 2 layers, Each layer should have at least 1 image.');
         return res.status(400).send('Use at least 2 layers, Each layer should have at least 1 image.');
     }
 
@@ -44,9 +40,9 @@ app.post('/upload', function (req, res) {
         if (Object.keys(layer_index).length < 1)
             return res.status(400).send('Use at least 2 layers, Each layer should have at least 1 image.');
 
-        Object.keys(layers[layer_index]).forEach(file => {
+        Object.keys(layers[layer_index]).forEach(file_index => {
+            let file = layers[layer_index][file_index];
             if (!validFile(file)) {
-                console.log('file invalid')
                 return;
             }
             file.layerName = 'layer' + layer_index;
@@ -56,7 +52,6 @@ app.post('/upload', function (req, res) {
 
 
     let fileCount = 0;
-    console.log('files.length: ' + files.length)
     files.forEach(file => {
 
         if (!fs.existsSync(`./input/${token}`)) {
@@ -70,7 +65,6 @@ app.post('/upload', function (req, res) {
 
         file.mv(uploadPath, function (err) {
             if (err) {
-                console.log('couldnt move file')
                 return res.status(500).send(err);
             }
             resizeImage(simagePath, 250, 250);

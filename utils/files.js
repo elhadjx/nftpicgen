@@ -20,13 +20,11 @@ function validFile(file) {
 
     //Check size
     if (file.size > SIZE_LIMIT) {
-        console.log('size limit')
         return false;
     }
 
     //Check extension
     if (file.mimetype != "image/png") {
-        console.log(file)
         return false;
     }
 
