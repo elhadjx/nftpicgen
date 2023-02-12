@@ -24,13 +24,13 @@
         </div>
         <button class="start-button" onclick="showUploadForm()">Start</button>
     </div>
-    <form ref='uploadForm' id='uploadForm' action='/upload' method='post' encType="multipart/form-data">
+    <form ref='uploadForm' id='uploadForm'>
         <input type="hidden" name="token" id="token">
         <div class="fileLayer" id="layer0">
             <h3>Layer 0</h3>
             <input type="file" class="custom-file-input" name="files_layer_0" accept="image/png" multiple />
         </div>
-        <input class="btn" type='submit' id="submitButton" value='Upload' />
+        <button class="btn" id="submitButton" onclick="uploadFiles()">Upload</button>
         <button class="btn" id="buttonAdd" onclick="addLayer()">Add Layer</button>
     </form>
     <script src="script.js"></script>
