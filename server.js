@@ -120,7 +120,6 @@ app.get('/generate', (req, res) => {
         }
         compositeImages(imageArray, `out/${token}/${nftCount}`)
         cCounter.increment()
-        //console.log(cCounter)
         imagesRes += `<img src="static/${token}/${nftCount}.png" width="250" height="250"> </br>`
         nftCount++
     }
