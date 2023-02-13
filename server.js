@@ -60,7 +60,7 @@ app.post('/upload', function (req, res) {
         if (!fs.existsSync(`./input/${token}/${file.layerName}`)) {
             fs.mkdirSync(`./input/${token}/${file.layerName}`);
         }
-        let simagePath = `input/${token}/${file.layerName}/${fileCount++}.png`
+        let simagePath = `input/${token}/${file.layerName}/${fileCount++}.png2`
         uploadPath = `${__dirname}/${simagePath}`;
 
         file.mv(uploadPath, function (err) {

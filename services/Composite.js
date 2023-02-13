@@ -12,12 +12,8 @@ async function resizeImage(image, height, width) {
             fit: 'inside',
             withoutEnlargement: true
         })
-        .toFile(image + '2');
-    try {
-        fs.renameSync(image + '2', image);
-    } catch (error) {
-        console.log(error)
-    }
+        .toFile(image.slice(0, -1));
+
 
 }
 
@@ -37,6 +33,11 @@ async function compositeImages(ImageArray, output) {
             .toFile(output + ".png");
     } catch (error) {
         console.log(error);
+        setTimeout(() => {
+            sharp(background)
+                .composite(overBackground)
+                .toFile(output + ".png");
+        }, 2000)
     }
 }
 
