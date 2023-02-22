@@ -11,9 +11,9 @@ body {
 
 .logo {
     position: absolute;
-    top: 20px;
+    top: 0px;
     left: 20px;
-    width: 50%;
+    width: 20%;
     height: auto;
 }
 
